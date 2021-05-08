@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         getdata()
+        Floatingbutton()
     }
 
 
@@ -33,21 +34,31 @@ class MainActivity : AppCompatActivity() {
                     val body = response.body()
                     if (body != null){
                         showrcy(body.data)
-                        Toast.makeText(applicationContext,"Data Berhasil Didapatkan ",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,"Success Get Data ",Toast.LENGTH_SHORT).show()
                     }
                 }
             }
 
             override fun onFailure(call: Call<ListResponse<Person>>, t: Throwable) {
-                TODO("Not yet implemented")
+               println(t.message)
             }
         })
     }
     fun showrcy(Person : List<Person>){
-        mainadapter = Mainadapter(Person, object : Mainadapter.Click{
+        mainadapter = Mainadapter(Person,object : Mainadapter.Click{
             override fun onClick(post: Person) {
                 startActivity(Intent(this@MainActivity,Detail_Data::class.java).apply {
                     putExtra("id",post.id)
+                })
+            }
+
+            override fun EditClick(post: Person) {
+                startActivity(Intent(this@MainActivity,PostActivity::class.java).apply {
+                    putExtra("id",post.id)
+                    putExtra("first_name",post.first_name)
+                    putExtra("last_name",post.last_name)
+                    putExtra("email",post.email)
+
                 })
             }
 
@@ -55,6 +66,11 @@ class MainActivity : AppCompatActivity() {
         binding.Rcy.apply {
             adapter = mainadapter
             layoutManager = LinearLayoutManager(this@MainActivity)
+        }
+    }
+    fun Floatingbutton(){
+        binding.ButtonAdd.setOnClickListener {
+            startActivity(Intent(this,PostActivity::class.java))
         }
     }
 

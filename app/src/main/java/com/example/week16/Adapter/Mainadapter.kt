@@ -9,7 +9,7 @@ import com.example.week16.R
 import com.example.week16.databinding.ItemdataBinding
 
 
-class Mainadapter(private var users : List<Person>,val listener : Click):RecyclerView.Adapter<Mainadapter.UserViewHolder>() {
+class Mainadapter(private var users : List<Person>,val listener : Mainadapter.Click):RecyclerView.Adapter<Mainadapter.UserViewHolder>() {
     inner class UserViewHolder ( val binding : ItemdataBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -22,6 +22,9 @@ class Mainadapter(private var users : List<Person>,val listener : Click):Recycle
             firstname.setOnClickListener {
                 listener.onClick(users[position])
             }
+            IconEdit.setOnClickListener {
+                listener.EditClick(users[position])
+            }
         }
     }
 
@@ -30,5 +33,6 @@ class Mainadapter(private var users : List<Person>,val listener : Click):Recycle
     }
     interface Click{
         fun onClick (post : Person)
+        fun EditClick (post: Person)
     }
 }

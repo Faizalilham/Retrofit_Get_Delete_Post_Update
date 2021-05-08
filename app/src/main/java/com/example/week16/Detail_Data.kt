@@ -24,6 +24,8 @@ class Detail_Data : AppCompatActivity() {
         getdatafromactivity()
         delete()
         back()
+
+
     }
 
     private fun getdatafromactivity(){
@@ -35,13 +37,12 @@ class Detail_Data : AppCompatActivity() {
                             if(data!= null){
                                 showview(data.data)
                             }
-                            Toast.makeText(applicationContext,"Data Telah didapatkan",Toast.LENGTH_SHORT)
-                                    .show()
+
                         }
                     }
 
                     override fun onFailure(call: Call<SingleResponse<Person>>, t: Throwable) {
-                        TODO("Not yet implemented")
+                        println(t.message)
                     }
                 })
     }
@@ -57,7 +58,7 @@ class Detail_Data : AppCompatActivity() {
                 .enqueue(object : Callback<Void>{
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         if(response.isSuccessful){
-                            Toast.makeText(applicationContext,response.code().toString(),Toast.LENGTH_SHORT)
+                            Toast.makeText(applicationContext,"Successfully Deleted Data",Toast.LENGTH_SHORT)
                                     .show()
                         }
                     }
@@ -81,4 +82,5 @@ class Detail_Data : AppCompatActivity() {
             startActivity(Intent(this,MainActivity::class.java))
         }
     }
+
 }
